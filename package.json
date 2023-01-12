@@ -1,0 +1,31 @@
+{
+  "name": "crud_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon --exec ts-node src/index.ts",
+    "start:prod": "tsc && node",
+    "start:multi": "tsc && node --cluster=ok"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katusha-2010/CRUD_API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katusha-2010/CRUD_API/issues"
+  },
+  "homepage": "https://github.com/katusha-2010/CRUD_API#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "uuid": "^9.0.0"
+  }
+}
