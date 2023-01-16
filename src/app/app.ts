@@ -1,4 +1,4 @@
-import http from "http";
+import http, { IncomingMessage, ServerResponse } from "http";
 import 'dotenv/config';
 import { createNewUser, deleteUser, putUser, readUsers, UsersType } from "../users/users";
 import { InvalidError, NotFoundError } from "./errors";
@@ -12,13 +12,13 @@ const port = process.env.PORT || 4000;
 let allUsersArr: UsersType[] = [];
 let result:any;
 
-export const requestListener = async function(request:any, response:any){
-  const requestArr = request.url.trim().slice(1).split('/');
+export const requestListener = async function(request:IncomingMessage, response:ServerResponse){
+  const requestArr = request.url!.trim().slice(1).split('/');
   const [api, users, userID, ...other] = requestArr;
-  const isUserIdExistInAdress = `${api}/${users}` === 'api/users' && userID;
+  const isUserIdExistInAdress = (`${api}/${users}` === 'api/users' && userID)? true : false;
   const isURLCorrect = `${api}/${users}` === 'api/users' && other.length < 1;
 
-  const bufferArr: any[]= [];
+  const bufferArr: Buffer[]= [];
   for await (const chunk of request) {
     bufferArr.push(chunk);
   }
@@ -97,14 +97,19 @@ export function app(){
     if (cluster.isPrimary) {
       const countCpus = os.cpus().length;
     for(let i = 0; i < countCpus - 1; i++) {
-      const worker = cluster.fork({WorkerPort: 4001 + i});
+      const worker = cluster.fork({WorkerPort: +port + 1 + i});
       worker.on('exit', () => {console.log(`Worker died PID: ${process.pid}`)})
     }
 
     cluster.on('exit', () => console.log(`Worker died!`));
+
+    server.listen(port, ()=>{
+    console.log(`Server running at http://localhost:${port}/`);
+  })
+
     } else {
       const workerPort = +process.env.WorkerPort! as number;
-      server.listen(workerPort, ()=>{
+      http.createServer().listen(workerPort, ()=>{
       console.log(`Server running at http://localhost:${workerPort}/`);
     });
   }

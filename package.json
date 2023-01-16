@@ -8,7 +8,7 @@
     "test": "jest --watch --runInBand --detectOpenHandles",
     "start:dev": "nodemon --exec ts-node src/index.ts",
     "start:prod": "tsc && node dist/src/index.js",
-    "start:multi": "tsc && node --cluster=ok"
+    "start:multi": "tsc && node ./dist/src/index.js --cluster=ok"
   },
   "repository": {
     "type": "git",
