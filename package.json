@@ -2,12 +2,12 @@
   "name": "crud_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
 
   "scripts": {
     "test": "jest --watch --runInBand --detectOpenHandles",
     "start:dev": "nodemon --exec ts-node src/index.ts",
-    "start:prod": "webpack && node dist/bundle.cjs",
+    "start:prod": "tsc && node dist/src/index.js",
     "start:multi": "tsc && node --cluster=ok"
   },
   "repository": {
