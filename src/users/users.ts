@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ERR_INVALID_FIELDS, ERR_INVALID_URL, ERR_NOT_FOUND_ID } from '../app/constant_error';
 import { InvalidError, NotFoundError } from '../app/errors';
+import { validateUsers } from './validationUsers';
 
 export type UsersType = {
   id?:string,
@@ -23,7 +24,7 @@ export async function createNewUser(isUserIdExistInAdress:Boolean, requestData:U
   try {
     if(isUserIdExistInAdress){
       throw new NotFoundError(ERR_INVALID_URL);
-    }   
+    } 
     if(!isExistAllFieldsForCreateUser(requestData)){
       throw new InvalidError(ERR_INVALID_FIELDS);
     }
